@@ -5,7 +5,8 @@ import { Item } from '../../models/item';
 import { Items } from '../../providers/providers';
 import {Vet} from "../../models/Vet";
 
-import { Http, Headers, RequestOptions } from "@angular/http";
+import {VetsService} from "../../providers/vets.service";
+import {Http} from "@angular/http";
 
 @IonicPage()
 @Component({
@@ -14,15 +15,13 @@ import { Http, Headers, RequestOptions } from "@angular/http";
 })
 export class ListMasterPage {
   currentItems: Vet[];
+  public vetsService: VetsService;
 
-  constructor(public navCtrl: NavController, public http: Http, public items: Items, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public items: Items,
+              public modalCtrl: ModalController, public http: Http ) {
 
-    let api_url = "https://gateway.api.cloud.wso2.com:443/t/wso2apiforum/vets/v1.0.0/vets";
-
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer 2727584b-979f-3a4e-8b50-145e7f6c6ed2');
-    let options = new RequestOptions( { headers: headers });
-    this.http.get( api_url, options ).subscribe( lista => {
+    this.vetsService = new VetsService( this.http );
+    this.vetsService.findAllVets( ).subscribe( lista => {
       this.currentItems = lista.json() as Vet[];
     })
 

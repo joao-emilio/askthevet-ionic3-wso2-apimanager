@@ -48,8 +48,11 @@
   </form>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let pergunta of perguntas">
-        <h2>{{pergunta.question}}</h2>
+    <ion-item-sliding *ngFor="let item of perguntas">
+      <button ion-item>
+        <h2>{{item.question}}</h2>
+      </button>
+
     </ion-item-sliding>
   </ion-list>
 
